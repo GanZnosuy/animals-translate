@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Animals Translate - Google Style + 2 AdSense</title>
+<title>Animals Translate</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <style>
 body { font-family: Arial, sans-serif; background: #f1f3f4; margin:0; padding:0; display:flex; justify-content:center; }
@@ -18,24 +18,24 @@ button:hover { background:#155ab6; }
 .speaker { cursor:pointer; margin-left:5px; transition:0.2s; }
 .speaker:hover { transform: scale(1.2); }
 .output { margin-top:15px; background:#f7f7f7; padding:15px; border-radius:8px; min-height:60px; }
-.ad { text-align:center; margin:20px 0; }
 footer { text-align:center; margin-top:30px; color:#555; font-size:14px; }
 @media(max-width:650px){ .textarea-container { flex-direction:column; } }
 </style>
-
-<!-- Google AdSense script -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7898277753893806" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container">
-<h2>🐾 Animals Translate (Google Style + 2 AdSense)</h2>
+<h2>🐾 Animals Translate</h2>
 
 <div class="flex-row">
   <select id="mode">
-    <option value="vn-en">🇻🇳 → 🇺🇸 Normal</option>
-    <option value="en-vn">🇺🇸 → 🇻🇳 Normal</option>
-    <option value="vn-funny">🇻🇳 → Funny</option>
-    <option value="en-funny">🇺🇸 → Funny</option>
+    <option value="dog">🐶 Dog</option>
+    <option value="cat">🐱 Cat</option>
+    <option value="monkey">🐵 Monkey</option>
+    <option value="bird">🐦 Bird</option>
+    <option value="cow">🐮 Cow</option>
+    <option value="pig">🐷 Pig</option>
+    <option value="lion">🦁 Lion</option>
+    <option value="parrot">🦜 Parrot</option>
   </select>
   <button onclick="swapMode()">↔</button>
 </div>
@@ -47,55 +47,32 @@ footer { text-align:center; margin-top:30px; color:#555; font-size:14px; }
 
 <div class="flex-row">
   <button onclick="translateNow()">Translate</button>
-  <!-- Icon loa Google Style -->
   <svg class="speaker" onclick="speakOutput()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#1a73e8" viewBox="0 0 24 24">
     <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"/>
   </svg>
 </div>
 
-<!-- AdSense banner trên -->
-<div class="ad">
-<ins class="adsbygoogle"
-     style="display:block;width:728px;height:90px"
-     data-ad-client="ca-pub-7898277753893806"
-     data-ad-slot="7532424557"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 </div>
 
-</div>
-
-<!-- Footer với AdSense banner dưới -->
 <footer>
-<div class="ad">
-<ins class="adsbygoogle"
-     style="display:block;width:728px;height:90px"
-     data-ad-client="ca-pub-7898277753893806"
-     data-ad-slot="7532424558"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>
 <p>© 2025 Animals Translate</p>
 </footer>
 
 <script>
-function normalVNtoEN(text){ return 'Translated to English: '+text; }
-function normalENtoVN(text){ return 'Dịch sang tiếng Việt: '+text; }
-function funnyVN(text){ const spice=[' nha má',' ông tướng ơi',' trời đất quỷ thần ơi',' ngáo hả?']; return text + spice[Math.floor(Math.random()*spice.length)]; }
-function funnyEN(text){ const spice=[' bro',' dude',' you goofy animal',' you silly potato']; return text + spice[Math.floor(Math.random()*spice.length)]; }
-
 function translateNow(){
   const text=document.getElementById('inputText').value.trim();
   const mode=document.getElementById('mode').value;
   if(!text){ document.getElementById('outputText').value='Bạn chưa nhập gì 😹'; return; }
   let result='';
   switch(mode){
-    case 'vn-en': result=normalVNtoEN(text); break;
-    case 'en-vn': result=normalENtoVN(text); break;
-    case 'vn-funny': result=funnyVN(text); break;
-    case 'en-funny': result=funnyEN(text); break;
+    case 'dog': result=text+' woof woof! 🐶'; break;
+    case 'cat': result=text+' meow meow, ngáo kìa 😼'; break;
+    case 'monkey': result=text+' ooh ooh aah aah 🐵'; break;
+    case 'bird': result=text+' tweet tweet! 🐦'; break;
+    case 'cow': result=text+' moo… ăn cỏ đi thôi 🐮'; break;
+    case 'pig': result=text+' oink oink, lợn đây 😏🐷'; break;
+    case 'lion': result=text+' roarrr! 🦁 tao là vua 😤'; break;
+    case 'parrot': result=text+' squawk! 🦜 nghe tao nói nè 🗣'; break;
   }
   document.getElementById('outputText').value=result;
 }
@@ -105,19 +82,26 @@ function speakOutput(){
   if(!text) return;
   const mode=document.getElementById('mode').value;
   const utter=new SpeechSynthesisUtterance(text);
-  utter.lang=(mode.includes('vn') ? 'vi-VN' : 'en-US');
+
+  switch(mode){
+    case 'dog': utter.lang='en-US'; utter.pitch=1.5; utter.rate=1.2; break;
+    case 'cat': utter.lang='en-US'; utter.pitch=1.8; utter.rate=1.0; break;
+    case 'monkey': utter.lang='en-US'; utter.pitch=1.2; utter.rate=1.5; break;
+    case 'bird': utter.lang='en-US'; utter.pitch=2.0; utter.rate=1.8; break;
+    case 'cow': utter.lang='en-US'; utter.pitch=0.7; utter.rate=0.8; break;
+    case 'pig': utter.lang='en-US'; utter.pitch=1.0; utter.rate=1.2; break;
+    case 'lion': utter.lang='en-US'; utter.pitch=0.9; utter.rate=0.9; break;
+    case 'parrot': utter.lang='en-US'; utter.pitch=1.6; utter.rate=1.5; break;
+  }
+
   speechSynthesis.speak(utter);
 }
 
 function swapMode(){
   const sel=document.getElementById('mode');
   const val=sel.value;
-  switch(val){
-    case 'vn-en': sel.value='en-vn'; break;
-    case 'en-vn': sel.value='vn-en'; break;
-    case 'vn-funny': sel.value='en-funny'; break;
-    case 'en-funny': sel.value='vn-funny'; break;
-  }
+  const map={'dog':'cat','cat':'dog','monkey':'bird','bird':'monkey','cow':'pig','pig':'cow','lion':'parrot','parrot':'lion'};
+  sel.value = map[val] || 'dog';
   document.getElementById('inputText').value=document.getElementById('outputText').value;
   document.getElementById('outputText').value='';
 }
