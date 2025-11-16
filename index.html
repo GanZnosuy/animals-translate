@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animals Translate - Google Style + 2 AdSense</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+body { font-family: Arial, sans-serif; background: #f1f3f4; margin:0; padding:0; display:flex; justify-content:center; }
+.container { max-width: 700px; width: 95%; margin-top:30px; background:white; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1); padding:20px; }
+h2 { text-align:center; color:#202124; }
+.textarea-container { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
+textarea { width:100%; height:150px; border-radius:8px; border:1px solid #ccc; padding:10px; resize:none; font-size:16px; }
+select, button { padding:12px; font-size:16px; border-radius:8px; border:none; margin-top:10px; }
+button { background:#1a73e8; color:white; cursor:pointer; transition:0.3s; }
+button:hover { background:#155ab6; }
+.flex-row { display:flex; align-items:center; gap:5px; }
+.speaker { cursor:pointer; margin-left:5px; transition:0.2s; }
+.speaker:hover { transform: scale(1.2); }
+.output { margin-top:15px; background:#f7f7f7; padding:15px; border-radius:8px; min-height:60px; }
+.ad { text-align:center; margin:20px 0; }
+footer { text-align:center; margin-top:30px; color:#555; font-size:14px; }
+@media(max-width:650px){ .textarea-container { flex-direction:column; } }
+</style>
+
+<!-- Google AdSense script -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7898277753893806" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+<h2>🐾 Animals Translate (Google Style + 2 AdSense)</h2>
+
+<div class="flex-row">
+  <select id="mode">
+    <option value="vn-en">🇻🇳 → 🇺🇸 Normal</option>
+    <option value="en-vn">🇺🇸 → 🇻🇳 Normal</option>
+    <option value="vn-funny">🇻🇳 → Funny</option>
+    <option value="en-funny">🇺🇸 → Funny</option>
+  </select>
+  <button onclick="swapMode()">↔</button>
+</div>
+
+<div class="textarea-container">
+  <textarea id="inputText" placeholder="Type or paste text..."></textarea>
+  <textarea id="outputText" placeholder="Output..." readonly></textarea>
+</div>
+
+<div class="flex-row">
+  <button onclick="translateNow()">Translate</button>
+  <!-- Icon loa Google Style -->
+  <svg class="speaker" onclick="speakOutput()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#1a73e8" viewBox="0 0 24 24">
+    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"/>
+  </svg>
+</div>
+
+<!-- AdSense banner trên -->
+<div class="ad">
+<ins class="adsbygoogle"
+     style="display:block;width:728px;height:90px"
+     data-ad-client="ca-pub-7898277753893806"
+     data-ad-slot="7532424557"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+</div>
+
+<!-- Footer với AdSense banner dưới -->
+<footer>
+<div class="ad">
+<ins class="adsbygoogle"
+     style="display:block;width:728px;height:90px"
+     data-ad-client="ca-pub-7898277753893806"
+     data-ad-slot="7532424558"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<p>© 2025 Animals Translate</p>
+</footer>
+
+<script>
+function normalVNtoEN(text){ return 'Translated to English: '+text; }
+function normalENtoVN(text){ return 'Dịch sang tiếng Việt: '+text; }
+function funnyVN(text){ const spice=[' nha má',' ông tướng ơi',' trời đất quỷ thần ơi',' ngáo hả?']; return text + spice[Math.floor(Math.random()*spice.length)]; }
+function funnyEN(text){ const spice=[' bro',' dude',' you goofy animal',' you silly potato']; return text + spice[Math.floor(Math.random()*spice.length)]; }
+
+function translateNow(){
+  const text=document.getElementById('inputText').value.trim();
+  const mode=document.getElementById('mode').value;
+  if(!text){ document.getElementById('outputText').value='Bạn chưa nhập gì 😹'; return; }
+  let result='';
+  switch(mode){
+    case 'vn-en': result=normalVNtoEN(text); break;
+    case 'en-vn': result=normalENtoVN(text); break;
+    case 'vn-funny': result=funnyVN(text); break;
+    case 'en-funny': result=funnyEN(text); break;
+  }
+  document.getElementById('outputText').value=result;
+}
+
+function speakOutput(){
+  const text=document.getElementById('outputText').value;
+  if(!text) return;
+  const mode=document.getElementById('mode').value;
+  const utter=new SpeechSynthesisUtterance(text);
+  utter.lang=(mode.includes('vn') ? 'vi-VN' : 'en-US');
+  speechSynthesis.speak(utter);
+}
+
+function swapMode(){
+  const sel=document.getElementById('mode');
+  const val=sel.value;
+  switch(val){
+    case 'vn-en': sel.value='en-vn'; break;
+    case 'en-vn': sel.value='vn-en'; break;
+    case 'vn-funny': sel.value='en-funny'; break;
+    case 'en-funny': sel.value='vn-funny'; break;
+  }
+  document.getElementById('inputText').value=document.getElementById('outputText').value;
+  document.getElementById('outputText').value='';
+}
+</script>
+</body>
+</html>
