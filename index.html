@@ -1,110 +1,169 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Animals Translate</title>
-<link rel="icon" type="image/png" href="favicon.png">
-<style>
-body { font-family: Arial, sans-serif; background: #f1f3f4; margin:0; padding:0; display:flex; justify-content:center; }
-.container { max-width: 700px; width: 95%; margin-top:30px; background:white; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1); padding:20px; }
-h2 { text-align:center; color:#202124; }
-.textarea-container { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
-textarea { width:100%; height:150px; border-radius:8px; border:1px solid #ccc; padding:10px; resize:none; font-size:16px; }
-select, button { padding:12px; font-size:16px; border-radius:8px; border:none; margin-top:10px; }
-button { background:#1a73e8; color:white; cursor:pointer; transition:0.3s; }
-button:hover { background:#155ab6; }
-.flex-row { display:flex; align-items:center; gap:5px; }
-.speaker { cursor:pointer; margin-left:5px; transition:0.2s; }
-.speaker:hover { transform: scale(1.2); }
-.output { margin-top:15px; background:#f7f7f7; padding:15px; border-radius:8px; min-height:60px; }
-footer { text-align:center; margin-top:30px; color:#555; font-size:14px; }
-@media(max-width:650px){ .textarea-container { flex-direction:column; } }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Animals Translate</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+      background: #fafafa;
+    }
+    .logo {
+      width: 120px;
+      display: block;
+      margin: 0 auto 10px;
+      animation: bounce 3s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    h1 { text-align: center; margin: 5px 0; }
+    h2 { text-align: center; margin: 0 0 20px; color: #555; font-style: italic; }
+    textarea {
+      width: 90%;
+      max-width: 600px;
+      height: 120px;
+      padding: 10px;
+      margin: 10px auto;
+      display: block;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    select, button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      margin: 5px;
+    }
+    .flex { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .animal-img {
+      position: absolute;
+      width: 80px;
+      opacity: 0.4;
+      pointer-events: none;
+      animation: float 8s infinite;
+    }
+    @keyframes float {
+      from { transform: translateY(0) translateX(0); }
+      to { transform: translateY(-30px) translateX(30px); }
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-<h2>🐾 Animals Translate</h2>
 
-<div class="flex-row">
-  <select id="mode">
-    <option value="dog">🐶 Dog</option>
-    <option value="cat">🐱 Cat</option>
-    <option value="monkey">🐵 Monkey</option>
-    <option value="bird">🐦 Bird</option>
-    <option value="cow">🐮 Cow</option>
-    <option value="pig">🐷 Pig</option>
-    <option value="lion">🦁 Lion</option>
-    <option value="parrot">🦜 Parrot</option>
-  </select>
-  <button onclick="swapMode()">↔</button>
-</div>
+  <!-- Logo -->
+  <img class="logo" src="https://scontent.fhan14-5.fna.fbcdn.net/v/t39.30808-6/484030438_9708808719151364_4898248301697989725_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_ohc=eCVL6dL5SukQ7kNvwFTXhYc&_nc_oc=Admn2RicI_HYDQJ_A7RYidBl1dhgqwB4Nw-xy1RmgqjQgMQcCboWuWuKEQLxqN3KJek&_nc_zt=23&_nc_ht=scontent.fhan14-5.fna&_nc_gid=RXyl-R4MPF-9FfA6pcVxMQ&oh=00_AfhhY_uBaWeBLQxmW9LbnsLKIPkQbzFhzbiffzz_5lB4Kw&oe=6920841C" alt="Logo Animals Translate">
 
-<div class="textarea-container">
-  <textarea id="inputText" placeholder="Type or paste text..."></textarea>
-  <textarea id="outputText" placeholder="Output..." readonly></textarea>
-</div>
+  <h1>Animals Translate</h1>
+  <h2>Dịch để thấu hiểu</h2>
 
-<div class="flex-row">
-  <button onclick="translateNow()">Translate</button>
-  <svg class="speaker" onclick="speakOutput()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#1a73e8" viewBox="0 0 24 24">
-    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"/>
-  </svg>
-</div>
+  <div class="flex">
+    <select id="mode">
+      <option value="dog">🐶 Dog</option>
+      <option value="cat">🐱 Cat</option>
+      <option value="monkey">🐵 Monkey</option>
+      <option value="bird">🐦 Bird</option>
+      <option value="cow">🐮 Cow</option>
+      <option value="pig">🐷 Pig</option>
+      <option value="lion">🦁 Lion</option>
+      <option value="parrot">🦜 Parrot</option>
+    </select>
 
-</div>
+    <select id="langMode">
+      <option value="vn2fun">🇻🇳 → Chế Việt</option>
+      <option value="vn2en">🇻🇳 → Chế English</option>
+      <option value="en2fun">🇬🇧 → Chế English</option>
+    </select>
+  </div>
 
-<footer>
-<p>© 2025 Animals Translate</p>
-</footer>
+  <textarea id="inputText" placeholder="Nhập vào đây..."></textarea>
+  <button onclick="translateFunny()">Dịch ngay</button>
+  <textarea id="outputText" readonly placeholder="Kết quả..."></textarea>
+  <button onclick="speakOutput()">🔊 Đọc theo con vật</button>
 
-<script>
-function translateNow(){
-  const text=document.getElementById('inputText').value.trim();
-  const mode=document.getElementById('mode').value;
-  if(!text){ document.getElementById('outputText').value='Bạn chưa nhập gì 😹'; return; }
-  let result='';
-  switch(mode){
-    case 'dog': result=text+' woof woof! 🐶'; break;
-    case 'cat': result=text+' meow meow, ngáo kìa 😼'; break;
-    case 'monkey': result=text+' ooh ooh aah aah 🐵'; break;
-    case 'bird': result=text+' tweet tweet! 🐦'; break;
-    case 'cow': result=text+' moo… ăn cỏ đi thôi 🐮'; break;
-    case 'pig': result=text+' oink oink, lợn đây 😏🐷'; break;
-    case 'lion': result=text+' roarrr! 🦁 tao là vua 😤'; break;
-    case 'parrot': result=text+' squawk! 🦜 nghe tao nói nè 🗣'; break;
-  }
-  document.getElementById('outputText').value=result;
-}
+  <!-- ảnh động vật random cute -->
+  <img id="ani1" class="animal-img">
+  <img id="ani2" class="animal-img">
+  <img id="ani3" class="animal-img">
 
-function speakOutput(){
-  const text=document.getElementById('outputText').value;
-  if(!text) return;
-  const mode=document.getElementById('mode').value;
-  const utter=new SpeechSynthesisUtterance(text);
+  <script>
+    // danh sách ảnh động vật cute
+    const animalImgs = [
+      'https://i.imgur.com/dW5FjQS.png',
+      'https://i.imgur.com/Gz2CsBQ.png',
+      'https://i.imgur.com/SERJZpB.png',
+      'https://i.imgur.com/uxO0gHc.png',
+      'https://i.imgur.com/TmK0kC0.png',
+      'https://i.imgur.com/zZUkUbr.png'
+    ];
 
-  switch(mode){
-    case 'dog': utter.lang='en-US'; utter.pitch=1.5; utter.rate=1.2; break;
-    case 'cat': utter.lang='en-US'; utter.pitch=1.8; utter.rate=1.0; break;
-    case 'monkey': utter.lang='en-US'; utter.pitch=1.2; utter.rate=1.5; break;
-    case 'bird': utter.lang='en-US'; utter.pitch=2.0; utter.rate=1.8; break;
-    case 'cow': utter.lang='en-US'; utter.pitch=0.7; utter.rate=0.8; break;
-    case 'pig': utter.lang='en-US'; utter.pitch=1.0; utter.rate=1.2; break;
-    case 'lion': utter.lang='en-US'; utter.pitch=0.9; utter.rate=0.9; break;
-    case 'parrot': utter.lang='en-US'; utter.pitch=1.6; utter.rate=1.5; break;
-  }
+    function setRandomAnimalImages(){
+      const ids = ['ani1','ani2','ani3'];
+      ids.forEach(id => {
+        const img = document.getElementById(id);
+        img.src = animalImgs[Math.floor(Math.random()*animalImgs.length)];
+        // random vị trí
+        img.style.top = Math.random() * 80 + '%';
+        img.style.left = Math.random() * 80 + '%';
+      });
+    }
+    setRandomAnimalImages();
 
-  speechSynthesis.speak(utter);
-}
+    function translateFunny(){
+      const text = document.getElementById('inputText').value.trim();
+      const mode = document.getElementById('langMode').value;
+      const animal = document.getElementById('mode').value;
+      let out = '';
+      if(!text) {
+        document.getElementById('outputText').value = 'Nhập gì đó đi chứ…';
+        return;
+      }
+      if(mode === 'vn2fun'){
+        out = 'Ờ thì... ' + text.replace(/ /g, ' 🤨 ') + ', nghe chưa?';
+      } else if(mode === 'vn2en'){
+        out = 'Bro said: ' + text + ' 💀 fr fr.';
+      } else if(mode === 'en2fun'){
+        out = 'Ngl fam, ' + text + ' 🔥 ong trời.';
+      }
+      // thêm tiếng con vật
+      switch(animal){
+        case 'dog': out += ' woof woof!'; break;
+        case 'cat': out += ' meow meow, ngáo kìa 😼'; break;
+        case 'monkey': out += ' ooh ooh aah aah!'; break;
+        case 'bird': out += ' tweet tweet!'; break;
+        case 'cow': out += ' moo… ăn cỏ đi thôi 😏'; break;
+        case 'pig': out += ' oink oink, lợn đây 😏'; break;
+        case 'lion': out += ' roarrr! tao là vua 😤'; break;
+        case 'parrot': out += ' squawk! nghe tao nói nè 🗣'; break;
+      }
+      document.getElementById('outputText').value = out;
+    }
 
-function swapMode(){
-  const sel=document.getElementById('mode');
-  const val=sel.value;
-  const map={'dog':'cat','cat':'dog','monkey':'bird','bird':'monkey','cow':'pig','pig':'cow','lion':'parrot','parrot':'lion'};
-  sel.value = map[val] || 'dog';
-  document.getElementById('inputText').value=document.getElementById('outputText').value;
-  document.getElementById('outputText').value='';
-}
-</script>
+    function speakOutput(){
+      const text = document.getElementById('outputText').value;
+      if(!text) return;
+      const animal = document.getElementById('mode').value;
+      const utter = new SpeechSynthesisUtterance(text);
+      switch(animal){
+        case 'dog': utter.pitch = 1.5; utter.rate = 1.2; break;
+        case 'cat': utter.pitch = 1.8; utter.rate = 1.0; break;
+        case 'monkey': utter.pitch = 1.2; utter.rate = 1.5; break;
+        case 'bird': utter.pitch = 2.0; utter.rate = 1.8; break;
+        case 'cow': utter.pitch = 0.7; utter.rate = 0.8; break;
+        case 'pig': utter.pitch = 1.0; utter.rate = 1.1; break;
+        case 'lion': utter.pitch = 0.9; utter.rate = 0.9; break;
+        case 'parrot': utter.pitch = 1.6; utter.rate = 1.4; break;
+      }
+      speechSynthesis.speak(utter);
+    }
+  </script>
+
 </body>
 </html>
