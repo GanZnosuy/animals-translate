@@ -3,49 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Animal & Random Image</title>
+<title>Animal Translate – Universe</title>
 <style>
-body {
-    font-family: "Comic Sans MS", sans-serif;
-    background: linear-gradient(135deg, #89f7fe, #66a6ff);
-    color: white;
-    text-align: center;
-    padding: 20px;
-    min-height: 100vh;
+body, html {
+    margin:0; padding:0; overflow:hidden; height:100%; font-family: "Comic Sans MS", sans-serif;
+    color:white; text-align:center;
 }
-#translatorBox, #randomBox {
+canvas#stars { position:fixed; top:0; left:0; z-index:-1; }
+
+#translatorBox {
+    position:relative; z-index:1;
     background: rgba(0,0,0,0.55);
-    padding: 20px;
-    border-radius: 15px;
-    width: 95%;
-    max-width: 500px;
-    margin: 20px auto;
+    padding: 20px; border-radius: 15px;
+    width: 95%; max-width: 500px; margin: 20px auto;
 }
 select, textarea, button {
-    width: 90%;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    margin: 10px 0;
+    width: 90%; padding:12px; border-radius:10px; border:none; margin:10px 0;
 }
-button {
-    cursor: pointer;
-    background-color: rgba(255,255,255,0.8);
-    transition: background 0.3s;
-}
+button { cursor:pointer; background-color: rgba(255,255,255,0.8); transition:0.3s; }
 button:hover { background-color: rgba(255,255,255,1); }
-#outputText { margin-top: 20px; font-size: 20px; }
-.animal-img { width: 90px; height: 90px; margin: 10px; image-rendering: pixelated; border-radius: 10px; }
-img.randomImg { width: 350px; max-width: 90vw; border-radius: 15px; transition: opacity 0.5s; cursor:pointer; }
+#outputText { margin-top:20px; font-size:20px; }
+.ads-container { text-align:center; margin:30px auto; max-width:100%; }
+.ads-container ins { display:inline-block; max-width:100%; }
 </style>
 </head>
 <body>
 
-<h1>🐾 Animal Translate & Random Image 🐾</h1>
-<p id="dateDisplay"></p>
-<p id="jokeBox" style="font-style:italic;"></p>
+<canvas id="stars"></canvas>
 
-<!-- TRANSLATOR -->
+<h1 style="position:relative; z-index:1;">🐾 Animal Translate – Vũ trụ 🐾</h1>
+<p id="dateDisplay" style="position:relative; z-index:1;"></p>
+<p id="jokeBox" style="font-style:italic; position:relative; z-index:1;"></p>
+
 <div id="translatorBox">
     <select id="animalSelect">
         <option value="cat">🐱 Mèo</option>
@@ -67,29 +56,53 @@ img.randomImg { width: 350px; max-width: 90vw; border-radius: 15px; transition: 
 
     <button onclick="translateText()">Dịch</button>
     <button id="speakBtn">🔊 Nghe</button>
+
     <p id="outputText"></p>
 </div>
 
-<!-- RANDOM FACEBOOK IMAGE -->
-<div id="randomBox">
-    <div id="container"></div>
-    <button onclick="loadRandom()">Xem ảnh khác</button>
+<!-- AdSense Banner -->
+<div class="ads-container" style="position:relative; z-index:1;">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7898277753893806"
+        crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-7898277753893806"
+         data-ad-slot="7532424557"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 </div>
 
-<!-- RANDOM ANIMAL PIXEL -->
-<div id="randomAnimals"></div>
-
 <script>
+// ================= STARFIELD =================
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+let stars = [], w=window.innerWidth, h=window.innerHeight;
+canvas.width=w; canvas.height=h;
+for(let i=0;i<200;i++){
+    stars.push({x:Math.random()*w, y:Math.random()*h, z:Math.random()*w});
+}
+function animateStars(){
+    ctx.fillStyle="black"; ctx.fillRect(0,0,w,h);
+    ctx.fillStyle="white";
+    for(let i=0;i<stars.length;i++){
+        let s=stars[i];
+        s.z-=2;
+        if(s.z<=0){ s.z=w; s.x=Math.random()*w; s.y=Math.random()*h; }
+        let px=(s.x - w/2)*(w/s.z)+w/2;
+        let py=(s.y - h/2)*(w/s.z)+h/2;
+        let radius=(w/s.z)*1.5;
+        ctx.beginPath(); ctx.arc(px,py,radius,0,Math.PI*2); ctx.fill();
+    }
+    requestAnimationFrame(animateStars);
+}
+animateStars();
+window.addEventListener("resize",()=>{ w=window.innerWidth; h=window.innerHeight; canvas.width=w; canvas.height=h; });
+
 // ====================== DATE & JOKE =========================
-const jokes = [
-    "Batman uống matcha → 'Mát Me'.",
-    "Sao tao biết mày béo? – Nhìn phát biết ngay.",
-    "Mày mồ côi hả? – Thảo nào nhìn mày thiếu tình thương.",
-    "Tao mà ôm mày chắc như ôm tủ lạnh mini."
-];
+const jokes = ["Batman uống matcha → 'Mát Me'.","Sao tao biết mày béo? – Nhìn phát biết ngay.","Mày mồ côi hả? – Thảo nào nhìn mày thiếu tình thương.","Tao mà ôm mày chắc như ôm tủ lạnh mini."];
 document.getElementById("jokeBox").innerText = jokes[Math.floor(Math.random()*jokes.length)];
-document.getElementById("dateDisplay").innerText =
-    new Date().toLocaleString("vi-VN", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
+document.getElementById("dateDisplay").innerText = new Date().toLocaleString("vi-VN", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
 
 // ====================== TRANSLATOR =========================
 const dictionary = {
@@ -113,44 +126,7 @@ document.getElementById("speakBtn").addEventListener("click",()=>{
     const msg=document.getElementById("outputText").innerText; if(!msg) return;
     const u=new SpeechSynthesisUtterance(msg); u.lang="vi-VN"; u.rate=1.2; speechSynthesis.speak(u);
 });
-
-// ====================== RANDOM FACEBOOK IMAGE =========================
-const facebookURL = "https://www.facebook.com/ganzdubai1904/";
-const folders = { truc1:20, truc2:15, truc3:18, truc4:22 };
-function randomImage(){
-    const folderNames = Object.keys(folders);
-    const folder = folderNames[Math.floor(Math.random()*folderNames.length)];
-    const imagesCount = folders[folder];
-    const index = Math.floor(Math.random()*imagesCount)+1;
-    return `images/${folder}/${index}.jpg`; 
-}
-function loadRandom(){
-    const imgSrc = randomImage();
-    const container = document.getElementById("container");
-    const existing = container.querySelector('img');
-    if(existing){
-        existing.style.opacity=0;
-        setTimeout(()=>{
-            container.innerHTML=`<a href="${facebookURL}" target="_blank">
-            <img class="randomImg" src="${imgSrc}" onerror="this.src='placeholder.jpg'" style="opacity:0">
-            </a>`;
-            const newImg = container.querySelector('img');
-            setTimeout(()=>newImg.style.opacity=1,50);
-        },500);
-    } else {
-        container.innerHTML=`<a href="${facebookURL}" target="_blank">
-        <img class="randomImg" src="${imgSrc}" onerror="this.src='placeholder.jpg'" style="opacity:0">
-        </a>`;
-        setTimeout(()=>container.querySelector('img').style.opacity=1,50);
-    }
-}
-loadRandom();
-
-// ====================== RANDOM ANIMAL PIXEL =========================
-const animalImages=["https://i.imgur.com/4AiXzf8.png","https://i.imgur.com/b2VxQ5X.png","https://i.imgur.com/MO3Gbmh.png","https://i.imgur.com/6bZax8K.png","https://i.imgur.com/itp6kDB.png","https://i.imgur.com/0HDZ4MM.png","https://i.imgur.com/v9b1KDc.png"];
-let html="";
-for(let i=0;i<4;i++){ const img=animalImages[Math.floor(Math.random()*animalImages.length)]; html+=`<img class="animal-img" src="${img}">`; }
-document.getElementById("randomAnimals").innerHTML=html;
 </script>
+
 </body>
 </html>
