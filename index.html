@@ -1,169 +1,175 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Animals Translate</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      position: relative;
-      overflow-x: hidden;
-      background: #fafafa;
-    }
-    .logo {
-      width: 120px;
-      display: block;
-      margin: 0 auto 10px;
-      animation: bounce 3s infinite;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    h1 { text-align: center; margin: 5px 0; }
-    h2 { text-align: center; margin: 0 0 20px; color: #555; font-style: italic; }
-    textarea {
-      width: 90%;
-      max-width: 600px;
-      height: 120px;
-      padding: 10px;
-      margin: 10px auto;
-      display: block;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-    select, button {
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 8px;
-      margin: 5px;
-    }
-    .flex { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .animal-img {
-      position: absolute;
-      width: 80px;
-      opacity: 0.4;
-      pointer-events: none;
-      animation: float 8s infinite;
-    }
-    @keyframes float {
-      from { transform: translateY(0) translateX(0); }
-      to { transform: translateY(-30px) translateX(30px); }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animals Translate V3</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2&family=Comic+Neue&display=swap" rel="stylesheet">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7898277753893806"
+     crossorigin="anonymous"></script>
+
+<style>
+body {
+    margin:0; padding:20px; font-family:'Baloo 2','Comic Neue',cursive;
+    overflow-x:hidden;
+    background: radial-gradient(#0a0a1a,#120b2b);
+    color:#fff; min-height:100vh; position: relative;
+}
+.star{position:absolute;width:2px;height:2px;background:white;border-radius:50%;animation:twinkle linear infinite;}
+@keyframes twinkle{0%{opacity:0;}50%{opacity:1;}100%{opacity:0;}}
+.logo{width:120px; display:block;margin:0 auto 10px; animation:bounce 3s infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+h1{text-align:center;margin:5px 0;}
+h2{text-align:center;margin:0 0 20px;color:#ccc;font-style:italic;}
+textarea{width:90%;max-width:600px;height:120px;padding:10px;margin:10px auto;display:block;border-radius:12px;border:1px solid #ccc;font-size:16px;color:#333;}
+textarea::placeholder{ color:#aaa; font-style:italic; }
+select, button{padding:10px;font-size:16px;border-radius:12px;margin:5px;}
+.flex{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;}
+.animal-img{position:absolute;width:80px;opacity:0.5;pointer-events:auto;animation:float 8s infinite linear;transform-origin:center;transition:0.3s;}
+.animal-img:hover{transform:scale(1.2) rotate(10deg);}
+.animal-img:active{transform:scale(1.4) rotate(-10deg);}
+@keyframes float{0%{transform:translateY(0) rotate(0deg);}100%{transform:translateY(-30px) rotate(360deg);}}
+.time-joke{text-align:center;margin:10px;font-size:18px;color:#ffeb3b;}
+</style>
 </head>
 <body>
 
-  <!-- Logo -->
-  <img class="logo" src="https://scontent.fhan14-5.fna.fbcdn.net/v/t39.30808-6/484030438_9708808719151364_4898248301697989725_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_ohc=eCVL6dL5SukQ7kNvwFTXhYc&_nc_oc=Admn2RicI_HYDQJ_A7RYidBl1dhgqwB4Nw-xy1RmgqjQgMQcCboWuWuKEQLxqN3KJek&_nc_zt=23&_nc_ht=scontent.fhan14-5.fna&_nc_gid=RXyl-R4MPF-9FfA6pcVxMQ&oh=00_AfhhY_uBaWeBLQxmW9LbnsLKIPkQbzFhzbiffzz_5lB4Kw&oe=6920841C" alt="Logo Animals Translate">
+<script>for(let i=0;i<100;i++){let s=document.createElement('div');s.className='star';s.style.top=Math.random()*100+'%';s.style.left=Math.random()*100+'%';s.style.animationDuration=2+Math.random()*3+'s';document.body.appendChild(s);}</script>
 
-  <h1>Animals Translate</h1>
-  <h2>Dịch để thấu hiểu</h2>
+<img class="logo" src="https://scontent.fhan14-5.fna.fbcdn.net/v/t39.30808-6/484030438_9708808719151364_4898248301697989725_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_ohc=eCVL6pYc&_nc_ht=scontent.fhan14-5.fna&_nc_gid=RXyl-R4MPF-9FfA6pcVxMQ&oh=00_AfhhY_uBaWeBLQxmW9LbnsLKIPkQbzFhzbiffzz_5lB4Kw&oe=6920841C" alt="Logo">
 
-  <div class="flex">
-    <select id="mode">
-      <option value="dog">🐶 Dog</option>
-      <option value="cat">🐱 Cat</option>
-      <option value="monkey">🐵 Monkey</option>
-      <option value="bird">🐦 Bird</option>
-      <option value="cow">🐮 Cow</option>
-      <option value="pig">🐷 Pig</option>
-      <option value="lion">🦁 Lion</option>
-      <option value="parrot">🦜 Parrot</option>
-    </select>
+<h1>Animals Translate V3</h1>
+<h2>Dịch để thấu hiểu</h2>
+<div class="time-joke" id="timeJoke"></div>
 
-    <select id="langMode">
-      <option value="vn2fun">🇻🇳 → Chế Việt</option>
-      <option value="vn2en">🇻🇳 → Chế English</option>
-      <option value="en2fun">🇬🇧 → Chế English</option>
-    </select>
-  </div>
+<div class="flex">
+<select id="mode">
+<option value="dog">🐶 Dog</option>
+<option value="cat">🐱 Cat</option>
+<option value="monkey">🐵 Monkey</option>
+<option value="bird">🐦 Bird</option>
+<option value="cow">🐮 Cow</option>
+<option value="pig">🐷 Pig</option>
+<option value="lion">🦁 Lion</option>
+<option value="parrot">🦜 Parrot</option>
+<option value="snake">🐍 Snake</option>
+<option value="mouse">🐭 Mouse</option>
+<option value="skeleton">💀 Cốt</option>
+<option value="blackperson">🧑🏿 Niggaaa</option>
+<option value="herb">🍀 Hoa Thanh Quế 36</option>
+</select>
+<select id="langMode">
+<option value="vn2fun">🇻🇳 → Chế Việt</option>
+<option value="vn2en">🇻🇳 → Chế English</option>
+<option value="en2fun">🇬🇧 → Chế English</option>
+<option value="viTTS">🔊 Tiếng Việt</option>
+</select>
+</div>
 
-  <textarea id="inputText" placeholder="Nhập vào đây..."></textarea>
-  <button onclick="translateFunny()">Dịch ngay</button>
-  <textarea id="outputText" readonly placeholder="Kết quả..."></textarea>
-  <button onclick="speakOutput()">🔊 Đọc theo con vật</button>
+<textarea id="inputText" placeholder="Nhập tin nhắn của bạn…"></textarea>
 
-  <!-- ảnh động vật random cute -->
-  <img id="ani1" class="animal-img">
-  <img id="ani2" class="animal-img">
-  <img id="ani3" class="animal-img">
+<ins class="adsbygoogle"
+     style="display:block; text-align:center; width:728px; height:90px; margin:10px auto;"
+     data-ad-client="ca-pub-7898277753893806"
+     data-ad-slot="7532424557"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
 
-  <script>
-    // danh sách ảnh động vật cute
-    const animalImgs = [
-      'https://i.imgur.com/dW5FjQS.png',
-      'https://i.imgur.com/Gz2CsBQ.png',
-      'https://i.imgur.com/SERJZpB.png',
-      'https://i.imgur.com/uxO0gHc.png',
-      'https://i.imgur.com/TmK0kC0.png',
-      'https://i.imgur.com/zZUkUbr.png'
-    ];
+<button onclick="translateFunny()">Dịch ngay</button>
+<textarea id="outputText" readonly placeholder="Kết quả..."></textarea>
+<button onclick="speakOutput()">🔊 Nghe</button>
 
-    function setRandomAnimalImages(){
-      const ids = ['ani1','ani2','ani3'];
-      ids.forEach(id => {
-        const img = document.getElementById(id);
-        img.src = animalImgs[Math.floor(Math.random()*animalImgs.length)];
-        // random vị trí
-        img.style.top = Math.random() * 80 + '%';
-        img.style.left = Math.random() * 80 + '%';
-      });
-    }
-    setRandomAnimalImages();
+<img id="ani1" class="animal-img">
+<img id="ani2" class="animal-img">
+<img id="ani3" class="animal-img">
+<img id="ani4" class="animal-img">
 
-    function translateFunny(){
-      const text = document.getElementById('inputText').value.trim();
-      const mode = document.getElementById('langMode').value;
-      const animal = document.getElementById('mode').value;
-      let out = '';
-      if(!text) {
-        document.getElementById('outputText').value = 'Nhập gì đó đi chứ…';
-        return;
-      }
-      if(mode === 'vn2fun'){
-        out = 'Ờ thì... ' + text.replace(/ /g, ' 🤨 ') + ', nghe chưa?';
-      } else if(mode === 'vn2en'){
-        out = 'Bro said: ' + text + ' 💀 fr fr.';
-      } else if(mode === 'en2fun'){
-        out = 'Ngl fam, ' + text + ' 🔥 ong trời.';
-      }
-      // thêm tiếng con vật
-      switch(animal){
-        case 'dog': out += ' woof woof!'; break;
-        case 'cat': out += ' meow meow, ngáo kìa 😼'; break;
-        case 'monkey': out += ' ooh ooh aah aah!'; break;
-        case 'bird': out += ' tweet tweet!'; break;
-        case 'cow': out += ' moo… ăn cỏ đi thôi 😏'; break;
-        case 'pig': out += ' oink oink, lợn đây 😏'; break;
-        case 'lion': out += ' roarrr! tao là vua 😤'; break;
-        case 'parrot': out += ' squawk! nghe tao nói nè 🗣'; break;
-      }
-      document.getElementById('outputText').value = out;
-    }
+<script>
+const animalImgs=["https://link1.jpg","https://link2.jpg","https://link3.jpg","https://link4.jpg","https://link5.jpg",
+"https://link6.jpg","https://link7.jpg","https://link8.jpg","https://link9.jpg","https://link10.jpg",
+"https://link11.jpg","https://link12.jpg","https://link13.jpg","https://link14.jpg","https://link15.jpg",
+"https://link16.jpg","https://link17.jpg","https://link18.jpg","https://link19.jpg","https://link20.jpg",
+"https://link21.jpg","https://link22.jpg","https://link23.jpg","https://link24.jpg","https://link25.jpg",
+"https://link26.jpg","https://link27.jpg","https://link28.jpg","https://link29.jpg","https://link30.jpg",
+"https://link31.jpg","https://link32.jpg","https://link33.jpg","https://link34.jpg","https://link35.jpg",
+"https://link36.jpg","https://link37.jpg","https://link38.jpg","https://link39.jpg","https://link40.jpg",
+"https://link41.jpg","https://link42.jpg","https://link43.jpg","https://link44.jpg","https://link45.jpg",
+"https://link46.jpg","https://link47.jpg","https://link48.jpg","https://link49.jpg","https://link50.jpg"];
 
-    function speakOutput(){
-      const text = document.getElementById('outputText').value;
-      if(!text) return;
-      const animal = document.getElementById('mode').value;
-      const utter = new SpeechSynthesisUtterance(text);
-      switch(animal){
-        case 'dog': utter.pitch = 1.5; utter.rate = 1.2; break;
-        case 'cat': utter.pitch = 1.8; utter.rate = 1.0; break;
-        case 'monkey': utter.pitch = 1.2; utter.rate = 1.5; break;
-        case 'bird': utter.pitch = 2.0; utter.rate = 1.8; break;
-        case 'cow': utter.pitch = 0.7; utter.rate = 0.8; break;
-        case 'pig': utter.pitch = 1.0; utter.rate = 1.1; break;
-        case 'lion': utter.pitch = 0.9; utter.rate = 0.9; break;
-        case 'parrot': utter.pitch = 1.6; utter.rate = 1.4; break;
-      }
-      speechSynthesis.speak(utter);
-    }
-  </script>
+function setRandomAnimalImages(){
+['ani1','ani2','ani3','ani4'].forEach(id=>{
+  const img=document.getElementById(id);
+  img.src=animalImgs[Math.floor(Math.random()*animalImgs.length)];
+  img.style.top=Math.random()*80+'%';
+  img.style.left=Math.random()*80+'%';
+  img.style.transform='rotate('+Math.random()*360+'deg)';
+});
+}
+setRandomAnimalImages();
+
+const jokes=["Con mèo hỏi con chuột: 'Sao hôm nay cậu chạy nhanh thế?'",
+"Chó đi học yoga mà cứ nằm ngủ trên thảm 😂",
+"Chim parrot nói: 'Bro, đừng quên ăn sáng!'",
+"Con gấu kêu: 'Ai ăn hết mật ong của tôi?'",
+"Chú lợn tập gym mà vẫn ăn bánh 🥓",
+"Con sư tử tự khen mình: 'Ta là vua!'"];
+document.getElementById('timeJoke').innerHTML=new Date().toLocaleString('vi-VN',{weekday:'long', day:'numeric', month:'long', year:'numeric'}) 
++"<br>Joke of the day: "+jokes[Math.floor(Math.random()*jokes.length)];
+
+function translateFunny(){
+let text=document.getElementById('inputText').value.trim();
+let mode=document.getElementById('langMode').value;
+let animal=document.getElementById('mode').value;
+let out='';
+if(!text){document.getElementById('outputText').value='Nhập gì đó đi…'; return;}
+if(mode==='vn2fun'){out='Ờ thì... '+text.replace(/ /g,' 🤨 ')+', nghe chưa?';}
+else if(mode==='vn2en'){out='Bro said: '+text+' 💀 fr fr.';}
+else if(mode==='en2fun'){out='Ngl fam, '+text+' 🔥 ong trời.';}
+else if(mode==='viTTS'){out=text;}
+switch(animal){
+case 'dog': out+=' woof woof!'; break;
+case 'cat': out+=' meow meow 😼'; break;
+case 'monkey': out+=' ooh ooh aah aah!'; break;
+case 'bird': out+=' tweet tweet!'; break;
+case 'cow': out+=' moo 😏'; break;
+case 'pig': out+=' oink oink 😏'; break;
+case 'lion': out+=' roarrr 😤'; break;
+case 'parrot': out+=' squawk! 🗣'; break;
+case 'snake': out+=' hsss 🐍'; break;
+case 'mouse': out+=' squeak 🐭'; break;
+case 'skeleton': out+=' rattle 💀'; break;
+case 'blackperson': out+=' yo yo! ✊🏿'; break;
+case 'herb': out+=' 🍀'; break;
+}
+document.getElementById('outputText').value=out;
+}
+
+function speakOutput(){
+let text=document.getElementById('outputText').value;
+if(!text) return;
+let animal=document.getElementById('mode').value;
+let langMode=document.getElementById('langMode').value;
+let utter=new SpeechSynthesisUtterance(text);
+utter.lang=(langMode==='viTTS')?'vi-VN':'en-US';
+switch(animal){
+case 'dog': utter.pitch=1.5; utter.rate=1.2; break;
+case 'cat': utter.pitch=1.8; utter.rate=1.0; break;
+case 'monkey': utter.pitch=1.2; utter.rate=1.5; break;
+case 'bird': utter.pitch=2.0; utter.rate=1.8; break;
+case 'cow': utter.pitch=0.7; utter.rate=0.8; break;
+case 'pig': utter.pitch=1.0; utter.rate=1.1; break;
+case 'lion': utter.pitch=0.9; utter.rate=0.9; break;
+case 'parrot': utter.pitch=1.6; utter.rate=1.4; break;
+case 'snake': utter.pitch=1.3; utter.rate=1.2; break;
+case 'mouse': utter.pitch=1.6; utter.rate=1.3; break;
+case 'skeleton': utter.pitch=0.5; utter.rate=0.7; break;
+case 'blackperson': utter.pitch=1.2; utter.rate=1.2; break;
+case 'herb': utter.pitch=1.0; utter.rate=1.0; break;
+}
+speechSynthesis.speak(utter);
+}
+</script>
 
 </body>
 </html>
