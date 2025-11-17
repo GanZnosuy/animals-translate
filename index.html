@@ -3,35 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Animal Translate – Universe</title>
+<title>Animal & Celeb Translate – Universe</title>
 <style>
-body, html {
-    margin:0; padding:0; overflow:hidden; height:100%; font-family: "Comic Sans MS", sans-serif;
-    color:white; text-align:center;
-}
+body, html { margin:0; padding:0; overflow:hidden; height:100%; font-family:"Comic Sans MS", sans-serif; color:white; text-align:center; }
 canvas#stars { position:fixed; top:0; left:0; z-index:-1; }
-
-#translatorBox {
-    position:relative; z-index:1;
-    background: rgba(0,0,0,0.55);
-    padding: 20px; border-radius: 15px;
-    width: 95%; max-width: 500px; margin: 20px auto;
-}
-select, textarea, button {
-    width: 90%; padding:12px; border-radius:10px; border:none; margin:10px 0;
-}
+#translatorBox { position:relative; z-index:1; background:rgba(0,0,0,0.55); padding:20px; border-radius:15px; width:95%; max-width:500px; margin:20px auto; }
+select, textarea, button { width:90%; padding:12px; border-radius:10px; border:none; margin:10px 0; }
 button { cursor:pointer; background-color: rgba(255,255,255,0.8); transition:0.3s; }
 button:hover { background-color: rgba(255,255,255,1); }
 #outputText { margin-top:20px; font-size:20px; }
-.ads-container { text-align:center; margin:30px auto; max-width:100%; }
+.ads-container { text-align:center; margin:30px auto; max-width:100%; position:relative; z-index:1; }
 .ads-container ins { display:inline-block; max-width:100%; }
 </style>
+
+<!-- AdSense script load 1 lần -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7898277753893806"
+     crossorigin="anonymous"></script>
 </head>
 <body>
 
 <canvas id="stars"></canvas>
 
-<h1 style="position:relative; z-index:1;">🐾 Animal Translate – Vũ trụ 🐾</h1>
+<h1 style="position:relative; z-index:1;">🐾 Animal & Celeb Translate – Vũ trụ 🐾</h1>
 <p id="dateDisplay" style="position:relative; z-index:1;"></p>
 <p id="jokeBox" style="font-style:italic; position:relative; z-index:1;"></p>
 
@@ -50,10 +43,15 @@ button:hover { background-color: rgba(255,255,255,1); }
         <option value="gymer">🏋️ Gymer</option>
         <option value="fish">🐟 Cá</option>
         <option value="pig">🐷 Heo</option>
+        <option value="ronaldo">⚽ Ronaldo</option>
+        <option value="messi">⚽ Messi</option>
+        <option value="mpappe">⚽ Mbappe</option>
+        <option value="robetocalories">🤖 Robetocalories</option>
+        <option value="kelvindeBurger">🍔 Kelvin de Burger</option>
+        <option value="massive">🏋️ Massive</option>
     </select>
 
     <textarea id="inputText" placeholder="Nhập tin nhắn…"></textarea>
-
     <button onclick="translateText()">Dịch</button>
     <button id="speakBtn">🔊 Nghe</button>
 
@@ -61,9 +59,7 @@ button:hover { background-color: rgba(255,255,255,1); }
 </div>
 
 <!-- AdSense Banner -->
-<div class="ads-container" style="position:relative; z-index:1;">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7898277753893806"
-        crossorigin="anonymous"></script>
+<div class="ads-container">
     <ins class="adsbygoogle"
          style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-7898277753893806"
@@ -77,18 +73,14 @@ button:hover { background-color: rgba(255,255,255,1); }
 // ================= STARFIELD =================
 const canvas = document.getElementById("stars");
 const ctx = canvas.getContext("2d");
-let stars = [], w=window.innerWidth, h=window.innerHeight;
+let stars=[], w=window.innerWidth, h=window.innerHeight;
 canvas.width=w; canvas.height=h;
-for(let i=0;i<200;i++){
-    stars.push({x:Math.random()*w, y:Math.random()*h, z:Math.random()*w});
-}
+for(let i=0;i<200;i++){ stars.push({x:Math.random()*w, y:Math.random()*h, z:Math.random()*w}); }
 function animateStars(){
     ctx.fillStyle="black"; ctx.fillRect(0,0,w,h);
     ctx.fillStyle="white";
     for(let i=0;i<stars.length;i++){
-        let s=stars[i];
-        s.z-=2;
-        if(s.z<=0){ s.z=w; s.x=Math.random()*w; s.y=Math.random()*h; }
+        let s=stars[i]; s.z-=2; if(s.z<=0){ s.z=w; s.x=Math.random()*w; s.y=Math.random()*h; }
         let px=(s.x - w/2)*(w/s.z)+w/2;
         let py=(s.y - h/2)*(w/s.z)+h/2;
         let radius=(w/s.z)*1.5;
@@ -99,28 +91,61 @@ function animateStars(){
 animateStars();
 window.addEventListener("resize",()=>{ w=window.innerWidth; h=window.innerHeight; canvas.width=w; canvas.height=h; });
 
-// ====================== DATE & JOKE =========================
-const jokes = ["Batman uống matcha → 'Mát Me'.","Sao tao biết mày béo? – Nhìn phát biết ngay.","Mày mồ côi hả? – Thảo nào nhìn mày thiếu tình thương.","Tao mà ôm mày chắc như ôm tủ lạnh mini."];
+// ================= DATE & JOKE =================
+const jokes=[
+    "Batman uống matcha → 'Mát Me'.",
+    "Sao tao biết mày béo? – Nhìn phát biết ngay.",
+    "Mày mồ côi hả? – Thảo nào nhìn mày thiếu tình thương.",
+    "Tao mà ôm mày chắc như ôm tủ lạnh mini.",
+    "Yêu nhiều người thì bị suy gì - Suy đa =))",
+    "tại sao đi ngược lại cuộc sống thì bị gọi là xấu xa - bởi vì live đọc ngược là evil",
+    "Dân content vừa chạy deadline vừa 'trả bài' gọi là gì? Vắt Chân Lên Cổ",
+    "Đố em cái gì đẹp hơn cả đôi tay, đi xa hơn cả đôi chân?? Đôi Mình",
+    "Mạng xã hội và người yêu giống nhau ở điểm nào ?-Không chăm là mất tương tác đó bǎo bèi",
+    "Em muốn trúng số, nhưng mà số phu thê với anh =))",
+    "1 thằng con trai ra đường làm bậy là bạ mà không có nhỏ bồ đi cùng, người ta la lên cái gì? -POL-ICE",
+    "Khi người Huế chê người da đen chơi game không giỏi, họ sẽ nói gì? anh 'ni gà' rứa",
+    "Ở quê những người đặt bẫy cá nếu họ là nữ thì gọi là gì? => trapgirl",
+    "Giây phút nào khiến con người có nhiều hy vọng nhất? → J-Hope",
+    "Đi mua trà sữa gì mà chỉ đứng nhìn không được uống? → Koi (Coi) thôi",
+    "Tại sao hình tròn lại giúp người cận nhìn rõ hơn? → Tại nó có bán kính",
+    "Nhà văn nào chỉ biết vẽ tranh? → Tô Hoài",
+    "Mặt trời óng mượt gọi là gì? → Sun Silk",
+    "Xe máy biết cười gọi là gì? → Yamaha-ha-ha",
+    "Con trai ăn gì sẽ không để ý tới con gái? → Burger (bơ girl)",
+    "Từ nhỏ đã là mọt sách thì gọi là gì? → Non nerd (non nớt)",
+    "Mệt nhưng vẫn chở bồ đi ngắm hoàng hôn là gì? → Ráng chiều",
+    "Quả dưa biết leo gọi là gì? → Dưa leo",
+    "Dưa không biết leo là gì? → Dưa hấu",
+    "Tại sao? → Vì dưa hấu không phải dưa leo",
+    "Tại sao cầu thủ bóng chày luôn nhận lỗi về họ? → My bat",
+    "Trong tất cả các loại buồn thì buồn gì là vui nhất? → Buồn cười",
+    "Ghi tên Messi mà bị thừa cân thì gọi là gì? → Massive =))",
+    "Ghi tên Robeto và tính calo thì gọi là? → Robetocalories",
+    "Ghi tên Mbappe tính kg thì gọi là? → Kilogram Mpappe",
+    "Ghi tên Kelvin ăn burger thì gọi là? → Kelvin de Burger"
+];
 document.getElementById("jokeBox").innerText = jokes[Math.floor(Math.random()*jokes.length)];
-document.getElementById("dateDisplay").innerText = new Date().toLocaleString("vi-VN", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
 
-// ====================== TRANSLATOR =========================
-const dictionary = {
-    cat: ["meow meow","mep mep"], dog: ["gâu gâu","woof woof"],
-    snake: ["ssss ssss","phụtttt"], mouse: ["chít chít","tweak tweak"],
-    duck: ["quạc quạc","quack quack"], bone: ["lạch cạch","cốt kêu răng rắc"],
-    black: ["yo nigaaa","wassup gang"], leaf: ["rau má rau má","nem chua"],
-    batman: ["I'm Bat-meow","Justice smells funny"], elon: ["Mars time","Dogecoin to the moon"],
-    gymer: ["nâng tạ lên","đi tập chưa con gà"], fish: ["blub blub","cho tao thở"],
-    pig: ["ụt ịt","grừm grừm"]
+// ================= TRANSLATOR =================
+const dictionary={
+    cat:["meow meow","mep mep"], dog:["gâu gâu","woof woof"],
+    snake:["ssss ssss","phụtttt"], mouse:["chít chít","tweak tweak"],
+    duck:["quạc quạc","quack quack"], bone:["lạch cạch","cốt kêu răng rắc"],
+    black:["yo nigaaa","wassup gang"], leaf:["rau má rau má","nem chua"],
+    batman:["I'm Bat-meow","Justice smells funny"], elon:["Mars time","Dogecoin to the moon"],
+    gymer:["nâng tạ lên","đi tập chưa con gà"], fish:["blub blub","cho tao thở"],
+    pig:["ụt ịt","grừm grừm"],
+    ronaldo:["siuuuu","siu siu"], messi:["bucumesiu","buuu messi"], 
+    mpappe:["kilogram mpappe"], robetocalories:["calories robot"], kelvindeBurger:["Kelvin de Burger"], massive:["thừa cân =))"]
 };
-function translateText() {
-    const text = document.getElementById("inputText").value;
-    const type = document.getElementById("animalSelect").value;
+function translateText(){
+    const text=document.getElementById("inputText").value;
+    const type=document.getElementById("animalSelect").value;
     if(!text.trim()){ document.getElementById("outputText").innerText="Nhập gì đi!"; return; }
-    const arr = dictionary[type];
-    const funny = arr[Math.floor(Math.random()*arr.length)];
-    document.getElementById("outputText").innerText = funny;
+    const arr=dictionary[type];
+    const funny=arr[Math.floor(Math.random()*arr.length)];
+    document.getElementById("outputText").innerText=funny;
 }
 document.getElementById("speakBtn").addEventListener("click",()=>{
     const msg=document.getElementById("outputText").innerText; if(!msg) return;
