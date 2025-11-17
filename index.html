@@ -3,27 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Animal Translate</title>
-
+<title>Animal & Random Image</title>
 <style>
 body {
     font-family: "Comic Sans MS", sans-serif;
-    background: url("https://png.pngtree.com/thumb_back/fh260/background/20230611/pngtree-stars-in-the-night-sky-abstract-illustration-of-a-dark-sky-filled-with-image_2931099.jpg");
-    background-size: cover;
+    background: linear-gradient(135deg, #89f7fe, #66a6ff);
     color: white;
     text-align: center;
     padding: 20px;
+    min-height: 100vh;
 }
-
-#translatorBox {
+#translatorBox, #randomBox {
     background: rgba(0,0,0,0.55);
     padding: 20px;
     border-radius: 15px;
     width: 95%;
     max-width: 500px;
-    margin: auto;
+    margin: 20px auto;
 }
-
 select, textarea, button {
     width: 90%;
     padding: 12px;
@@ -31,27 +28,24 @@ select, textarea, button {
     border: none;
     margin: 10px 0;
 }
-
-#gallery {
-    margin-top: 50px;
+button {
+    cursor: pointer;
+    background-color: rgba(255,255,255,0.8);
+    transition: background 0.3s;
 }
-
-.animal-img {
-    width: 90px;
-    height: 90px;
-    margin: 10px;
-    image-rendering: pixelated;
-    border-radius: 10px;
-}
+button:hover { background-color: rgba(255,255,255,1); }
+#outputText { margin-top: 20px; font-size: 20px; }
+.animal-img { width: 90px; height: 90px; margin: 10px; image-rendering: pixelated; border-radius: 10px; }
+img.randomImg { width: 350px; max-width: 90vw; border-radius: 15px; transition: opacity 0.5s; cursor:pointer; }
 </style>
 </head>
-
 <body>
 
-<h1>🐾 Animal Translate – Dịch để thấu hiểu 🐾</h1>
+<h1>🐾 Animal Translate & Random Image 🐾</h1>
 <p id="dateDisplay"></p>
-<p id="jokeBox" style="font-style:italic; margin-bottom:20px;"></p>
+<p id="jokeBox" style="font-style:italic;"></p>
 
+<!-- TRANSLATOR -->
 <div id="translatorBox">
     <select id="animalSelect">
         <option value="cat">🐱 Mèo</option>
@@ -59,9 +53,9 @@ select, textarea, button {
         <option value="snake">🐍 Rắn</option>
         <option value="mouse">🐭 Chuột</option>
         <option value="duck">🦆 Vịt</option>
-        <option value="bone">💀 Bộ xương (Cốt)</option>
-        <option value="black">🧑🏿 Da màu (Nigaaa)</option>
-        <option value="leaf">🌿 Rau má – Hoa thanh quế</option>
+        <option value="bone">💀 Bộ xương</option>
+        <option value="black">🧑🏿 Da màu</option>
+        <option value="leaf">🌿 Rau má</option>
         <option value="batman">🦇 Batman</option>
         <option value="elon">🚀 Elon Musk</option>
         <option value="gymer">🏋️ Gymer</option>
@@ -69,96 +63,94 @@ select, textarea, button {
         <option value="pig">🐷 Heo</option>
     </select>
 
-    <textarea id="inputText" placeholder="Nhập tin nhắn của bạn…"></textarea>
+    <textarea id="inputText" placeholder="Nhập tin nhắn…"></textarea>
 
     <button onclick="translateText()">Dịch</button>
     <button id="speakBtn">🔊 Nghe</button>
-
-    <p id="outputText" style="margin-top:20px; font-size:20px;"></p>
+    <p id="outputText"></p>
 </div>
 
-<!-- Random ảnh động vật pixel -->
+<!-- RANDOM FACEBOOK IMAGE -->
+<div id="randomBox">
+    <div id="container"></div>
+    <button onclick="loadRandom()">Xem ảnh khác</button>
+</div>
+
+<!-- RANDOM ANIMAL PIXEL -->
 <div id="randomAnimals"></div>
 
 <script>
-// ====================== RANDOM JOKE =========================
+// ====================== DATE & JOKE =========================
 const jokes = [
-    "Batman uống matcha → thành 'Mát Me'.",
+    "Batman uống matcha → 'Mát Me'.",
     "Sao tao biết mày béo? – Nhìn phát biết ngay.",
-    "Mày mồ côi hả? – Thảo nào nhìn mày thiếu tình thương vãi.",
-    "Tao mà ôm mày chắc như ôm tủ lạnh mini.",
-    "Nhìn mày chạy như con gà mất dép nhưng lại là mất cả đôi.",
-    "Mày mà nhảy xuống nước cá tưởng cục mỡ rơi xuống.",
-    "Mày cười như đang nén 3 lít hơi trong bụng."
+    "Mày mồ côi hả? – Thảo nào nhìn mày thiếu tình thương.",
+    "Tao mà ôm mày chắc như ôm tủ lạnh mini."
 ];
 document.getElementById("jokeBox").innerText = jokes[Math.floor(Math.random()*jokes.length)];
-
-// ====================== DATE =========================
 document.getElementById("dateDisplay").innerText =
     new Date().toLocaleString("vi-VN", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
 
-// ====================== ANIMAL DICTIONARY =========================
+// ====================== TRANSLATOR =========================
 const dictionary = {
-    cat: ["meow meow", "mep mep", "gu gu ngủ đi bro"],
-    dog: ["gâu gâu", "woof woof", "ê ai cho mày vô đây"],
-    snake: ["ssss ssss", "phụtttt", "tao trườn vô tim mày"],
-    mouse: ["chít chít", "tweak tweak", "tao ăn vụng nè"],
-    duck: ["quạc quạc", "quack quack", "tắm không bé"],
-    bone: ["lạch cạch", "cốt kêu răng rắc", "tao thiếu canxi huhu"],
-    black: ["yo nigaaa", "wassup gang gang", "pull up brooo"],
-    leaf: ["rau má rau má", "đường tàu nè", "nem chua cầm nhầm dép"],
-    batman: ["I'm Bat-meow", "Justice smells funny", "Where's my matcha?"],
-    elon: ["Mars time", "Dogecoin to the moon", "Tesla autopilot vào tim em"],
-    gymer: ["nâng tạ lên", "đẩy đi bro", "đi tập chưa con gà"],
-    fish: ["blub blub", "ướt át vãi", "cho tao thở cái"],
-    pig: ["ụt ịt", "grừm grừm", "ăn nữa không?"]
+    cat: ["meow meow","mep mep"], dog: ["gâu gâu","woof woof"],
+    snake: ["ssss ssss","phụtttt"], mouse: ["chít chít","tweak tweak"],
+    duck: ["quạc quạc","quack quack"], bone: ["lạch cạch","cốt kêu răng rắc"],
+    black: ["yo nigaaa","wassup gang"], leaf: ["rau má rau má","nem chua"],
+    batman: ["I'm Bat-meow","Justice smells funny"], elon: ["Mars time","Dogecoin to the moon"],
+    gymer: ["nâng tạ lên","đi tập chưa con gà"], fish: ["blub blub","cho tao thở"],
+    pig: ["ụt ịt","grừm grừm"]
 };
-
-// ====================== TRANSLATION =========================
 function translateText() {
     const text = document.getElementById("inputText").value;
     const type = document.getElementById("animalSelect").value;
-
-    if (!text.trim()) {
-        document.getElementById("outputText").innerText = "Nhập gì đó đi bạn ơi…";
-        return;
-    }
-
+    if(!text.trim()){ document.getElementById("outputText").innerText="Nhập gì đi!"; return; }
     const arr = dictionary[type];
     const funny = arr[Math.floor(Math.random()*arr.length)];
-
     document.getElementById("outputText").innerText = funny;
 }
-
-// ====================== SPEAK =========================
-document.getElementById("speakBtn").addEventListener("click", () => {
-    const msg = document.getElementById("outputText").innerText;
-    if (!msg) return;
-
-    const u = new SpeechSynthesisUtterance(msg);
-    u.lang = "vi-VN";
-    u.rate = 1.2;
-    speechSynthesis.speak(u);
+document.getElementById("speakBtn").addEventListener("click",()=>{
+    const msg=document.getElementById("outputText").innerText; if(!msg) return;
+    const u=new SpeechSynthesisUtterance(msg); u.lang="vi-VN"; u.rate=1.2; speechSynthesis.speak(u);
 });
 
-// ====================== RANDOM ANIMAL IMAGES =========================
-const animalImages = [
-    "https://i.imgur.com/4AiXzf8.png",
-    "https://i.imgur.com/b2VxQ5X.png",
-    "https://i.imgur.com/MO3Gbmh.png",
-    "https://i.imgur.com/6bZax8K.png",
-    "https://i.imgur.com/itp6kDB.png",
-    "https://i.imgur.com/0HDZ4MM.png",
-    "https://i.imgur.com/v9b1KDc.png"
-];
-
-let html = "";
-for (let i = 0; i < 4; i++) {
-    const img = animalImages[Math.floor(Math.random()*animalImages.length)];
-    html += `<img class="animal-img" src="${img}">`;
+// ====================== RANDOM FACEBOOK IMAGE =========================
+const facebookURL = "https://www.facebook.com/ganzdubai1904/";
+const folders = { truc1:20, truc2:15, truc3:18, truc4:22 };
+function randomImage(){
+    const folderNames = Object.keys(folders);
+    const folder = folderNames[Math.floor(Math.random()*folderNames.length)];
+    const imagesCount = folders[folder];
+    const index = Math.floor(Math.random()*imagesCount)+1;
+    return `images/${folder}/${index}.jpg`; 
 }
-document.getElementById("randomAnimals").innerHTML = html;
-</script>
+function loadRandom(){
+    const imgSrc = randomImage();
+    const container = document.getElementById("container");
+    const existing = container.querySelector('img');
+    if(existing){
+        existing.style.opacity=0;
+        setTimeout(()=>{
+            container.innerHTML=`<a href="${facebookURL}" target="_blank">
+            <img class="randomImg" src="${imgSrc}" onerror="this.src='placeholder.jpg'" style="opacity:0">
+            </a>`;
+            const newImg = container.querySelector('img');
+            setTimeout(()=>newImg.style.opacity=1,50);
+        },500);
+    } else {
+        container.innerHTML=`<a href="${facebookURL}" target="_blank">
+        <img class="randomImg" src="${imgSrc}" onerror="this.src='placeholder.jpg'" style="opacity:0">
+        </a>`;
+        setTimeout(()=>container.querySelector('img').style.opacity=1,50);
+    }
+}
+loadRandom();
 
+// ====================== RANDOM ANIMAL PIXEL =========================
+const animalImages=["https://i.imgur.com/4AiXzf8.png","https://i.imgur.com/b2VxQ5X.png","https://i.imgur.com/MO3Gbmh.png","https://i.imgur.com/6bZax8K.png","https://i.imgur.com/itp6kDB.png","https://i.imgur.com/0HDZ4MM.png","https://i.imgur.com/v9b1KDc.png"];
+let html="";
+for(let i=0;i<4;i++){ const img=animalImages[Math.floor(Math.random()*animalImages.length)]; html+=`<img class="animal-img" src="${img}">`; }
+document.getElementById("randomAnimals").innerHTML=html;
+</script>
 </body>
 </html>
