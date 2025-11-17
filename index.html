@@ -16,7 +16,6 @@ button:hover { background-color: rgba(255,255,255,1); }
 .ads-container ins { display:inline-block; max-width:100%; }
 </style>
 
-<!-- AdSense script -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7898277753893806"
      crossorigin="anonymous"></script>
 </head>
@@ -24,9 +23,14 @@ button:hover { background-color: rgba(255,255,255,1); }
 
 <canvas id="stars"></canvas>
 
+<div style="margin-bottom:15px; position:relative; z-index:1;">
+  <button onclick="setLang('vi')">🇻🇳 Tiếng Việt</button>
+  <button onclick="setLang('en')">🇬🇧 English</button>
+</div>
+
 <h1 style="position:relative; z-index:1;">🐾 Animal & Celeb Translate – Vũ trụ 🐾</h1>
 <p id="dateDisplay" style="position:relative; z-index:1;"></p>
-<p id="jokeBox" style="font-style:italic; position:relative; z-index:1;"></p>
+<p id="holidayDisplay" style="font-weight:bold; position:relative; z-index:1;"></p>
 
 <div id="translatorBox">
     <select id="animalSelect">
@@ -57,6 +61,9 @@ button:hover { background-color: rgba(255,255,255,1); }
 
     <p id="outputText"></p>
 </div>
+
+<h2 id="jokeTitle" style="position:relative; z-index:1;">JOKE OF THE DAY</h2>
+<p id="jokeBox" style="font-style:italic; margin-bottom:20px; position:relative; z-index:1;"></p>
 
 <!-- AdSense Banner -->
 <div class="ads-container">
@@ -91,19 +98,42 @@ function animateStars(){
 animateStars();
 window.addEventListener("resize",()=>{ w=window.innerWidth; h=window.innerHeight; canvas.width=w; canvas.height=h; });
 
-// ================= DATE & JOKE =================
-const jokes=[
-    "Batman uống matcha → 'Mát Me'.",
-    "Yêu nhiều người thì bị suy gì - Suy đa =))",
-    "Ghi tên Messi mà bị thừa cân thì gọi là gì? → Massive =))",
-    "Ghi tên Robeto và tính calo thì gọi là? → Robetocalories",
-    "Ghi tên Mbappe tính kg thì gọi là? → Kilogram Mpappe",
-    "Ghi tên Kelvin ăn burger thì gọi là? → Kelvin de Burger",
-    "Đi mua trà sữa gì mà chỉ đứng nhìn không được uống? → Koi (Coi) thôi",
-    "Con trai ăn gì sẽ không để ý tới con gái? → Burger (bơ girl)",
-    "Tao mà ôm mày chắc như ôm tủ lạnh mini."
-];
-document.getElementById("jokeBox").innerText = jokes[Math.floor(Math.random()*jokes.length)];
+// ================= DATE, HOLIDAY, JOKE =================
+let lang='vi';
+function setLang(l){ lang=l; updateDisplay(); }
+
+function updateDisplay(){
+    const now=new Date();
+
+    // DATE
+    document.getElementById("dateDisplay").innerText=
+        lang==='vi'? now.toLocaleDateString('vi-VN',{weekday:'long', year:'numeric', month:'long', day:'numeric'}):
+                     now.toLocaleDateString('en-US',{weekday:'long', year:'numeric', month:'long', day:'numeric'});
+
+    // HOLIDAYS
+    const holidays={'01-01':{vi:'Tết Dương Lịch',en:"New Year's Day"},
+                    '03-08':{vi:'Ngày Quốc tế Phụ nữ',en:'International Women\'s Day'},
+                    '12-25':{vi:'Giáng Sinh',en:'Christmas'}};
+    const key=now.toISOString().slice(5,10);
+    document.getElementById("holidayDisplay").innerText = holidays[key] ? holidays[key][lang] : '';
+
+    // JOKE OF THE DAY
+    const jokes=[
+        {vi:"Batman uống matcha → 'Mát Me'.", en:"Batman drinks matcha → 'Mat Me'."},
+        {vi:"Yêu nhiều người thì bị suy gì - Suy đa =))", en:"Loving many people → Multi-sad =))"},
+        {vi:"Đi mua trà sữa gì mà chỉ đứng nhìn không uống? → Koi thôi", en:"Buying milk tea but only looking? → Koi only"},
+        {vi:"Ghi tên Messi mà bị thừa cân thì gọi là gì? → Massive =))", en:"Name Messi but overweight? → Massive =))"},
+        {vi:"Ghi tên Robeto và tính calo thì gọi là? → Robetocalories", en:"Name Robeto & count calories → Robetocalories"},
+        {vi:"Ghi tên Mbappe tính kg thì gọi là? → Kilogram Mpappe", en:"Name Mbappe & weigh → Kilogram Mpappe"},
+        {vi:"Ghi tên Kelvin ăn burger → Kelvin de Burger", en:"Name Kelvin & burger → Kelvin de Burger"}
+    ];
+    const joke=jokes[now.getDate()%jokes.length];
+    document.getElementById("jokeBox").innerText = lang==='vi'? joke.vi : joke.en;
+
+    document.getElementById("jokeTitle").innerText = "JOKE OF THE DAY"; // cố định
+}
+
+updateDisplay();
 
 // ================= TRANSLATOR =================
 const dictionary={
